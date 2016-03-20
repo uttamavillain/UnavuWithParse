@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Name"
+        android:id="@+id/tvName"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <com.parse.ParseImageView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:id="@+id/ivFoodPic"
+        android:layout_below="@+id/tvName"
+        android:layout_centerHorizontal="true"
+        android:src="#6e3c3c" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:id="@+id/tvdescription"
+        android:layout_below="@+id/ivFoodPic"
+        android:layout_alignParentStart="true"
+        android:nestedScrollingEnabled="true"
+        android:maxLines="3"
+        android:ellipsize="end" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order this"
+        android:id="@+id/btorderthis"
+        android:layout_below="@+id/tvdescription"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

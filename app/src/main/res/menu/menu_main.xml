@@ -1,0 +1,16 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.MainActivity" >
+    <item android:id="@+id/action_settings"
+        android:title="LogOut"
+        android:orderInCategory="100"
+        android:onClick="onClicklogOut"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_cook"
+        android:title="Be Cook"
+        android:orderInCategory="100"
+        android:onClick="onClickBeCook"
+        app:showAsAction="never" />
+</menu>
