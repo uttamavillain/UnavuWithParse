@@ -18,7 +18,7 @@ import com.parse.ParseUser;
 
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class FoodActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +55,10 @@ public class MainActivity extends AppCompatActivity {
     private void introPage() {
         if (ParseUser.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
         } else {
             //ParseApplication.parseApplication.initFoodItems();
+            Log.d("Vijayaraj intropage",ParseUser.getCurrentUser().getUsername());
             setTitle(ParseUser.getCurrentUser().getUsername());
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().add(R.id.flFoodDisplay, new FoodTimeLineFragment()).commit();
@@ -68,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
             Log.d("Vijayaraj", "Inside activityresult");
-            setTitle(ParseUser.getCurrentUser().getUsername());
-            FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().add(R.id.flFoodDisplay, new FoodTimeLineFragment()).commit();
         }
     }
 
@@ -88,9 +86,11 @@ public class MainActivity extends AppCompatActivity {
         ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
             @Override
             public void done(ParseException e) {
+                if (e == null) {
+                    startActivity(new Intent(FoodActivity.this, LoginActivity.class));
+                }
                 progressDialog.dismiss();
             }
         });
-        introPage();
     }
 }

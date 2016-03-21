@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startFoodActivityIfLogin();
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
@@ -55,6 +56,14 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
+    }
+
+    private void startFoodActivityIfLogin() {
+        if (ParseUser.getCurrentUser() != null) {
+            Intent intent = new Intent(this, FoodActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void login() {
@@ -78,23 +87,18 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Implement your own authentication logic here.
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                                ParseUser.logInInBackground(email, password, new LogInCallback() {
-                                    public void done(ParseUser user, ParseException e) {
-                                        if (user != null) {
-                                            Log.d(TAG, "LogIn Successfull");
-                                            progressDialog.dismiss();
-                                            onLoginSuccess();
-                                        } else {
-                                            onLoginFailed();
-                                            Log.d(TAG, "LogIn Failed");
-                                        }
-                                    }
-                                });
-                    }
-                }, 3000);
+        ParseUser.logInInBackground(email, password, new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    Log.d(TAG, "LogIn Successfull");
+                    onLoginSuccess();
+                } else {
+                    onLoginFailed();
+                    Log.d(TAG, "LogIn Failed");
+                }
+                progressDialog.dismiss();
+            }
+        });
     }
 
 
@@ -111,14 +115,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // disable going back to the MainActivity
+        // disable going back to the FoodActivity
         moveTaskToBack(true);
     }
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
-        setResult(RESULT_OK);
-        finish();
+        startFoodActivityIfLogin();
     }
 
     public void onLoginFailed() {
